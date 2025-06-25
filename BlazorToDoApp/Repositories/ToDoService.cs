@@ -29,19 +29,13 @@ public class ToDoService
         return todos.OrderByDescending(item => item.id).ToList();
     }
 
-    public ToDoModel? EditToDo(int id)
+    public void EditToDo(int todoId, ToDoModel todo)
     {
-        var todo = todos.Find(item => item.id == id);
-        if (todo is not null)
+        var todoToUpdate = todos.Find(item => item.id == todoId);
+        if (todoToUpdate is not null)
         {
-            return new ToDoModel
-            {
-                id = todo.id,
-                desc = todo.desc,
-                completed = todo.completed
-            };
+            todoToUpdate.desc = todo.desc;
+            todoToUpdate.completed = todo.completed;
         }
-
-        return null;
     }
 }
