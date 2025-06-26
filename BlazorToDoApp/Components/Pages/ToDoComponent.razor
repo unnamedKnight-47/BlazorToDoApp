@@ -1,0 +1,70 @@
+@page "/todos"
+@rendermode InteractiveServer
+
+
+<h3>All Todos</h3>
+
+
+<button class="btn btn-primary m-3" @onclick="AddNewTask">
+    Add New Todo
+</button>
+
+@if (_todos is not null)
+{
+    <ul style="list-style-type:none;">
+        @foreach (var item in _todos)
+        {
+            <li>
+                @*                 <EditForm Model="item"
+                          OnSubmit="(() => Submit(item))">
+                    <div class="input-group w-75 align-items-center">
+                        <InputNumber @bind-Value=item.id
+                                     hidden></InputNumber>
+                        <InputCheckbox class="form-check-input m-3"
+                                       @bind-Value="item.completed"></InputCheckbox>
+                        <InputText class="form-control m-3"
+                                   @bind-Value="@item.desc"></InputText>
+                    </div>
+                </EditForm>
+
+                 *@
+
+                <div class="input-group w-75 align-items-center">
+                    <InputNumber @bind-Value=item.id
+                                 hidden></InputNumber>
+                    <InputCheckbox class="form-check-input m-3"
+                                   @bind-Value="item.completed"></InputCheckbox>
+                    <InputText class="form-control m-3"
+                               @bind-Value="@item.Desc"></InputText>
+                </div>
+            </li>
+        }
+    </ul>
+
+    @* @bind-Value:event=onchange ="@(() => ToggleCompleted(item))"></InputCheckbox> *@
+}
+
+
+@code {
+
+    private List<ToDoModel> _todos { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _todos = ToDoService.GetAllToDos();
+    }
+
+
+    // private void Submit(ToDoModel todo)
+    // {
+    //     ToDoService.EditToDo(todo.id, todo);
+    // }
+
+    private void AddNewTask()
+    {
+        ToDoService.AddToDo();
+        _todos = ToDoService.GetAllToDos();
+
+    }
+
+}

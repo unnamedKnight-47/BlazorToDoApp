@@ -1,40 +1,36 @@
-﻿using BlazorToDoApp.Models;
+using BlazorToDoApp.Models;
 
 namespace BlazorToDoApp.Repositories;
 
-public class ToDoService
+public static class ToDoService
 {
-    public List<ToDoModel> todos { get; set; }
-
-    public ToDoService()
+    public static List<ToDoModel> todos { get; set; } = new()
     {
-        todos = new()
-        {
-            new ToDoModel { id = 1, desc = "First Task" },
-            new ToDoModel { id = 2, desc = "Second Task" },
-            new ToDoModel { id = 3, desc = "Third Task" },
-            new ToDoModel { id = 4, desc = "Fourth Task" },
-        };
-    }
+        new ToDoModel { id = 1, Desc = "First Task" },
+        new ToDoModel { id = 2, Desc = "Second Task" },
+        new ToDoModel { id = 3, Desc = "Third Task" },
+        new ToDoModel { id = 4, Desc = "Fourth Task" },
+    };
 
-    public void AddToDo()
+
+    public static void AddToDo()
     {
         int newId = todos.Any() ? todos.Max(item => item.id) + 1 : 1;
-        var newToDo = new ToDoModel { id = newId, desc = "New Todo" };
+        var newToDo = new ToDoModel { id = newId, Desc = "New Todo" };
         todos.Add(newToDo);
     }
 
-    public List<ToDoModel> GetAllToDos()
+    public static List<ToDoModel> GetAllToDos()
     {
         return todos.OrderByDescending(item => item.id).ToList();
     }
 
-    public void EditToDo(int todoId, ToDoModel todo)
+    public static void EditToDo(int todoId, ToDoModel todo)
     {
         var todoToUpdate = todos.Find(item => item.id == todoId);
         if (todoToUpdate is not null)
         {
-            todoToUpdate.desc = todo.desc;
+            todoToUpdate.Desc = todo.Desc;
             todoToUpdate.completed = todo.completed;
         }
     }
